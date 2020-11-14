@@ -57,6 +57,10 @@ module.exports = class UnifiEvents extends EventEmitter {
                 password: this.opts.password
             }
         }).catch(() => {
+            if (err.statusCode == 400) {
+                console.error('Unifi Authentication failed');
+                process.exit(-1);
+            }            
             if (!reconnect) {
                 this._reconnect();
             }
